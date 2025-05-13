@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend - Backend Interaction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #message {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        #loading {
+            font-size: 18px;
+            color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Frontend</h1>
+    <div id="loading">Loading message from backend...</div>
+    <div id="message"></div>
+
+    <script>
+        fetch('http://backend:3000/api') 
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('message').innerText = data.message;
+            })
+            .catch(error => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('message').innerText = 'Failed to fetch message from backend.';
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    </script>
+    
+</body>
+</html>
+
+
